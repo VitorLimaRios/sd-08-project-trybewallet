@@ -1,3 +1,21 @@
+## Projeto de Web Chat
+
+Esta aplicação computa gastos de diferentes moedas e converte seu valor em real, além de permitir editar e excluir os gastos adicionados. Este projeto foi construído utilizando React, Redux e a API de [Cotação de Moedas](https://docs.awesomeapi.com.br/api-de-moedas).
+
+## Como usar
+
+Faça o clone do projeto:
+- `git clone https://github.com/VitorLimaRios/sd-08-project-trybewallet.git`.
+
+Após clonar o projeto faça a instalação das dependencias através do npm:
+- `npm install`.
+
+Inicie o projeto:
+- `npm start`.
+
+---
+---
+
 ### Termos e acordos
 
 Ao iniciar este projeto, você concorda com as diretrizes do Código de Ética e Conduta e do Manual da Pessoa Estudante da Trybe.
