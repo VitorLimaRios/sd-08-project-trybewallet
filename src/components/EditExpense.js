@@ -1,15 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { expensesAction } from '../actions/index';
+import { finishEditAction } from '../actions/index';
 
-const initialState = {
-  value: '0',
-  description: '',
-  currency: 'USD',
-  method: 'Dinheiro',
-  tag: 'Alimentação',
-};
 const methods = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
 const tags = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
 
@@ -20,11 +13,17 @@ class AddExpense extends React.Component {
     this.onFieldChange = this.onFieldChange.bind(this);
     this.addExpense = this.addExpense.bind(this);
 
-    // const { currentID } = this.props;
+    const { expenseID, expenses } = this.props;
+    const expense = expenses.find((item) => item.id === expenseID);
+    const { value, description, currency, method, tag, id } = expense;
 
     this.state = {
-      ...initialState,
-      // id: currentID,
+      value,
+      description,
+      currency,
+      method,
+      tag,
+      id,
     };
   }
 
@@ -141,24 +140,18 @@ class AddExpense extends React.Component {
     );
   }
 
-  async addExpense() {
-    const { value, description, currency, method, tag } = this.state;
-    const { saveExpense, currentID } = this.props;
-    const exchangeRates = await fetch('https://economia.awesomeapi.com.br/json/all')
-      .then((response) => response.json());
+  addExpense() {
+    const { value, description, currency, method, tag, id } = this.state;
+    const { finishEdit } = this.props;
     const expense = {
-      id: currentID,
+      id,
       value,
       description,
       currency,
       method,
       tag,
-      exchangeRates,
     };
-    saveExpense(expense);
-    this.setState({
-      ...initialState,
-    });
+    finishEdit(expense);
   }
 
   render() {
@@ -169,7 +162,7 @@ class AddExpense extends React.Component {
         {this.currencyInput()}
         {this.methodInput()}
         {this.tagInput()}
-        <button type="button" onClick={ this.addExpense }>Adicionar despesa</button>
+        <button type="button" onClick={ this.addExpense }>Editar despesa</button>
       </div>
     );
   }
@@ -177,17 +170,19 @@ class AddExpense extends React.Component {
 
 const mapStateToProps = (state) => ({
   currencies: state.wallet.currencies,
-  currentID: state.wallet.currentID,
+  expenseID: state.wallet.expenseID,
+  expenses: state.wallet.expenses,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  saveExpense: (expense) => dispatch(expensesAction(expense)),
+  finishEdit: (expense) => dispatch(finishEditAction(expense)),
 });
 
 AddExpense.propTypes = {
   currencies: PropTypes.objectOf(PropTypes.object).isRequired,
-  saveExpense: PropTypes.func.isRequired,
-  currentID: PropTypes.number.isRequired,
+  expenseID: PropTypes.string.isRequired,
+  expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
+  finishEdit: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddExpense);

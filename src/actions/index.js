@@ -4,6 +4,8 @@ export const REQUEST_CURRENCIES = 'REQUEST_CURRENCIES';
 export const REQUEST_SUCCESS = 'REQUEST_SUCCESS';
 export const REQUEST_FAIL = 'REQUEST_FAIL';
 export const DELETE_EXPENSE = 'DELETE_EXPENSE';
+export const EDIT_EXPENSE = 'EDIT_EXPENSE';
+export const FINISH_EDIT = 'FINISH_EDIT';
 
 export const loginAction = (email) => ({ type: LOGIN, email });
 export const expensesAction = (expenses) => ({ type: EXPENSES, expenses });
@@ -30,4 +32,14 @@ export const fetchCurrencies = () => async (dispatch) => {
 export const deleteExpenseAction = (expenseID) => ({
   type: DELETE_EXPENSE,
   expenseID,
+});
+
+export const editExpenseAction = (expenseID) => ({
+  type: EDIT_EXPENSE,
+  expenseID,
+});
+
+export const finishEditAction = (expenses) => ({
+  type: FINISH_EDIT,
+  expenses,
 });
