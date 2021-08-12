@@ -11,9 +11,10 @@ export const loginAction = (email) => ({ type: LOGIN, email });
 export const expensesAction = (expenses) => ({ type: EXPENSES, expenses });
 
 const requestCurrencies = () => ({ type: REQUEST_CURRENCIES });
-const requestSuccess = (currencies) => (
-  { type: REQUEST_SUCCESS, currencies }
-);
+const requestSuccess = (currencies) => ({
+  type: REQUEST_SUCCESS,
+  currencies: Object.keys(currencies).filter((currency) => currency !== 'USDT'),
+});
 const requestFail = (error) => (
   { type: REQUEST_FAIL, error }
 );

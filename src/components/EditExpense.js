@@ -70,7 +70,6 @@ class AddExpense extends React.Component {
   currencyInput() {
     const { currencies } = this.props;
     const { currency } = this.state;
-    const allCurrencies = Object.keys(currencies);
     return (
       <label htmlFor="currency-input">
         Moeda usada:
@@ -81,16 +80,11 @@ class AddExpense extends React.Component {
           onChange={ this.onFieldChange }
           data-testid="currency-input"
         >
-          {allCurrencies.map((item) => {
-            if (item === 'USDT') {
-              return 'ignore';
-            }
-            return (
-              <option key={ item } data-testid={ item }>
-                {item}
-              </option>
-            );
-          })}
+          {currencies.map((item) => (
+            <option key={ item } data-testid={ item }>
+              {item}
+            </option>
+          ))}
         </select>
       </label>
     );
